@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "net-BlazorApp-WebAssembly-fundamentos-incio", "net-BlazorApp-WebAssembly-fundamentos-incio.csproj", "{CCAE2DFD-CCB9-4D20-BDB7-5700DF5AB07C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "net-BlazorApp-WebAssembly-fundamentos-incio", "net-BlazorApp-WebAssembly-fundamentos-incio.csproj", "{CCAE2DFD-CCB9-4D20-BDB7-5700DF5AB07C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
