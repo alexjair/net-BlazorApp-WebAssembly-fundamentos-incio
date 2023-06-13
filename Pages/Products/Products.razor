@@ -1,0 +1,68 @@
+﻿@page "/product"
+@inject ILogger<Products> logger;
+@inject IProductService productService;
+@inject NavigationManager NavigationManager;
+<!-- Usar Javascript -->
+@inject IJSRuntime IJSRuntime;
+<!-- Toas msg -->
+@inject IToastService toastService
+
+<PageTitle>Products</PageTitle>
+
+<ModuleTitle Title="Products" />
+
+<button class="btn btn-primary my-3" @onclick="@(()=> NavigationManager.NavigateTo("/addproduct"))">New Product</button>
+
+@if(products?.Count > 0)
+{
+    <div class="products-container">
+        @foreach (var product in products)
+        {
+            <div class="card">
+                <img class="card-img-top" src="@product.Images[0]" alt="Product" loading="lazy" width="270" height="210">
+                <div class="card-body">
+                    <h4><b>@product.Title</b></h4>
+                    <p>@product.Price?.ToString("C")</p>
+                    <button 
+                        title="Delete" 
+                        class="btn btn-danger btn-delete" 
+                        @onclick="@(() => DeleteProduct(product))"
+                     ><span class="oi oi-trash"></span> Delete </button>
+                </div>
+            </div>
+        }
+    </div>
+
+}
+else
+{
+    <p>No hay productos para mostrar</p>
+}
+
+@code
+{
+    private List<Product>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetProducts();
+    }
+
+    private async Task GetProducts()
+    {
+        products = await productService.Get();
+    }
+
+    private async Task DeleteProduct(Product product)
+    {
+        bool confirmed = await IJSRuntime.InvokeAsync<bool>("confirm", $"Are you sure? {product.Title}");
+        if (!confirmed)
+            return;
+        await productService.Delete(product.Id);
+        //msg de eliminado , por la lib. de toas.service
+        //toastService.ShowSuccess("Product delete");
+
+        await GetProducts();
+    }
+}
+}
